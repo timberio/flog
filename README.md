@@ -48,6 +48,7 @@ Options:
                            - rfc3164
                            - rfc5424
                            - json
+                           - java
   -o, --output string      output filename. Path-like is allowed. (default "generated.log")
   -t, --type string        log output type. available types:
                            - stdout (default)
@@ -72,7 +73,7 @@ Options:
 $ flog
 
 # Generate 200 lines of logs with a time interval of 10s for each log. It doesn't actually sleep while generating
-$ flog -s 10s -n 200 
+$ flog -s 10s -n 200
 
 # Generate a single log file with 1000 lines of logs, then overwrite existing log file
 $ flog -t log -w
@@ -96,6 +97,7 @@ $ flog -f rfc3164 -l
 - RFC5424
 - Common log fomat
 - JSON
+- Java
 
 ## Supported Outputs
 
