@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -30,7 +31,7 @@ const (
 	// at org.elasticsearch.client.RestHighLevelClient.ping(RestHighLevelClient.java:275) ~[elasticsearch-rest-high-level-client-6.3.2.jar:6.3.2]
 	// at org.apache.skywalking.oap.server.library.client.elasticsearch.ElasticSearchClient.connect(ElasticSearchClient.java:121) ~[library-client-6.6.0.1.jar:6.6.0.1]
 	// at org.apache.skywalking.oap.server.storage.plugin.elasticsearch.StorageModuleElasticsearchProvider.start(StorageModuleElasticsearchProvider.java:131) ~[storage-elasticsearch-plugin-6.6.0.1.jar:6.6.0.1]
-	JavaLogFormat = "%s,%d %s.%s.%s.%s.%s.%s.%s -%d [main] ERROR [] - method [%s], host [%s:%d], URI [%s], status line [%s %d %s]\n%s.%s.%s.%s.%s.%s.%s: method [%s] host [%s:%d], URI [%s], status line [%s %d %s]\n at %s.%s.%s.%s.%s.%s.%s(%s.java:%d) ~ [%s-%s-%s-%d.%d.%d.%d.jar:%d.%d.%d.%d]\n at %s.%s.%s.%s.%s.%s.%s(%s.java:%d) ~ [%s-%s-%s-%d.%d.%d.%d.jar:%d.%d.%d.%d]"
+	JavaLogFormat = "%s %s.%s.%s.%s.%s.%s.%s -%d [main] ERROR [] - method [%s], host [%s:%d], URI [%s], status line [%s %d %s]\n%s.%s.%s.%s.%s.%s.%s: method [%s] host [%s:%d], URI [%s], status line [%s %d %s]\n at %s.%s.%s.%s.%s.%s.%s(%s.java:%d) ~ [%s-%s-%s-%d.%d.%d.%d.jar:%d.%d.%d.%d]\n at %s.%s.%s.%s.%s.%s.%s(%s.java:%d) ~ [%s-%s-%s-%d.%d.%d.%d.jar:%d.%d.%d.%d]"
 )
 
 // NewApacheCommonLog creates a log string with apache common log format
@@ -142,10 +143,22 @@ func NewJSONLogFormat(t time.Time) string {
 
 // NewJavaLogFormat creates a log string with json log format
 func NewJavaLogFormat(t time.Time) string {
+	rand.Seed(time.Now().Unix())
+
+	formats := []string{
+		"2006-01-02 15:04:05",
+		"2006-01-02T15:04:05Z",
+		"2006-01-02T15:04:05.999Z",
+		"02/Jan/2006:15:04:05 -0700",
+		"2006/01/02 15:04:05",
+		"2006-01-02T15:04:05.999999999Z",
+	}
+
+	format := formats[rand.Intn(len(formats))]
+
 	return fmt.Sprintf(
 		JavaLogFormat,
-		t.Format(RFC3164),
-		gofakeit.Number(111, 999),
+		t.Format(format),
 		gofakeit.Word(),
 		gofakeit.Word(),
 		gofakeit.Word(),

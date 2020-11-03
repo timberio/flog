@@ -5,6 +5,7 @@ go 1.14
 require (
 	bou.ke/monkey v1.0.1
 	github.com/brianvoe/gofakeit v3.11.5+incompatible
+	github.com/brianvoe/gofakeit/v5 v5.10.1
 	github.com/davecgh/go-spew v1.1.0 // indirect
 	github.com/fatih/color v1.6.0 // indirect
 	github.com/mattn/go-colorable v0.0.9 // indirect
