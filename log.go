@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"strings"
 	"time"
 
@@ -143,22 +142,9 @@ func NewJSONLogFormat(t time.Time) string {
 
 // NewJavaLogFormat creates a log string with json log format
 func NewJavaLogFormat(t time.Time) string {
-	rand.Seed(time.Now().Unix())
-
-	formats := []string{
-		"2006-01-02 15:04:05",
-		"2006-01-02T15:04:05Z",
-		"2006-01-02T15:04:05.999Z",
-		"02/Jan/2006:15:04:05 -0700",
-		"2006/01/02 15:04:05",
-		"2006-01-02T15:04:05.999999999Z",
-	}
-
-	format := formats[rand.Intn(len(formats))]
-
 	return fmt.Sprintf(
 		JavaLogFormat,
-		t.Format(format),
+		RandTimeFormat(),
 		gofakeit.Word(),
 		gofakeit.Word(),
 		gofakeit.Word(),
